@@ -10,6 +10,7 @@ android {
     namespace = Project.NAME_SPACE
     compileSdk = Project.COMPILE_SDK
 
+
     defaultConfig {
         applicationId = Project.NAME_SPACE
         minSdk = Project.MIN_SDK
@@ -36,7 +37,10 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
     dataBinding {
-        isEnabled = true
+        enable = true
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -56,4 +60,12 @@ dependencies {
 
     implementation(Google.Hilt.HILT_ANDROID)
     kapt(Google.Hilt.HILT_COMPILER)
+
+    implementation(AndroidX.Lifecycle.LIFECYCLE_RUNTIME_KTX)
+    implementation(AndroidX.Lifecycle.PROCESS)
+    implementation(AndroidX.Lifecycle.RUNTIME)
+    implementation(AndroidX.Lifecycle.VIEWMODEL)
+    implementation(AndroidX.Lifecycle.VIEWMODEL_SAVEDSTATE)
+
+    implementation(AndroidX.Activity.ACTIVITY_KTX)
 }
