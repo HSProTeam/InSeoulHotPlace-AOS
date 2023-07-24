@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id(Plugin.ANDROID_LIBERARY)
@@ -6,6 +7,7 @@ plugins {
     id(Plugin.DAGGER_HILT)
     kotlin(Plugin.KAPT)
 }
+
 
 android {
     namespace = Project.NAME_SPACE
@@ -17,6 +19,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "API_URL", getLocalProperties("api_url"))
     }
 
     buildTypes {
@@ -34,6 +38,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -59,4 +67,8 @@ dependencies {
 
     implementation(Google.Hilt.HILT_ANDROID)
     kapt(Google.Hilt.HILT_COMPILER)
+}
+
+fun getLocalProperties(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
