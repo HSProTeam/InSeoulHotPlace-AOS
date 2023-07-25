@@ -1,5 +1,6 @@
 package com.soten.sjc.data.network.retrofit
 
+import com.soten.sjc.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,11 +17,15 @@ internal object RetrofitFactory {
     }
 
     private fun createOkhttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(
+        val okHttpClientBuilder = OkHttpClient.Builder()
+
+        if (BuildConfig.DEBUG) {
+            okHttpClientBuilder.addInterceptor(
                 HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY),
             )
-            .build()
+        }
+
+        return okHttpClientBuilder.build()
     }
 }
