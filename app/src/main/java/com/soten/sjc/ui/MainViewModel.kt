@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soten.sjc.domain.model.CongestionInfo
 import com.soten.sjc.domain.repository.CongestRepository
+import com.soten.sjc.util.SearchUtil.search
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +25,9 @@ class MainViewModel @Inject constructor(
     val keyword = _keyword.asStateFlow()
 
     val searchCongestionInfos = congestionInfos.combine(keyword) { infos, keyword ->
-        infos.filter { it.areaName.contains(keyword) }
+        infos.filter {
+            search(it.areaName, keyword)
+        }
     }
 
     init {
