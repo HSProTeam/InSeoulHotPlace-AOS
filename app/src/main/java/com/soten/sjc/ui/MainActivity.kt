@@ -9,6 +9,7 @@ import com.soten.sjc.base.BaseAdapter
 import com.soten.sjc.databinding.ActivityMainBinding
 import com.soten.sjc.util.KeyboardVisibilityUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -42,9 +43,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.observeData()
 
         lifecycleScope.launch {
-            mainViewModel.searchCongestionInfos.collect{
-                areaAdapter.replaceAll(it)
-            }
+            mainViewModel.searchCongestionInfos
+                .distinctUntilChanged()
+                .collect {
+                    areaAdapter.replaceAll(it)
+                }
         }
     }
 }
