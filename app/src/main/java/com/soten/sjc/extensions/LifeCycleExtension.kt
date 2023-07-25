@@ -13,3 +13,11 @@ fun LifecycleOwner.repeatOnStart(block: suspend () -> Unit) {
         }
     }
 }
+
+fun LifecycleOwner.repeatOnResumed(block: suspend () -> Unit) {
+    lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            block.invoke()
+        }
+    }
+}
