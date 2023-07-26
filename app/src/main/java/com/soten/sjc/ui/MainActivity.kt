@@ -7,6 +7,7 @@ import com.soten.sjc.R
 import com.soten.sjc.base.BaseActivity
 import com.soten.sjc.base.BaseAdapter
 import com.soten.sjc.databinding.ActivityMainBinding
+import com.soten.sjc.extensions.repeatOnStart
 import com.soten.sjc.util.KeyboardVisibilityUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -42,7 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun observeData() {
         super.observeData()
 
-        lifecycleScope.launch {
+        repeatOnStart {
             mainViewModel.filteredCongestionInfos
                 .distinctUntilChanged()
                 .collect {
