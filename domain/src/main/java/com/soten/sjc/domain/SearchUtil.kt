@@ -1,4 +1,4 @@
-package com.soten.sjc.util
+package com.soten.sjc.domain
 
 object SearchUtil {
 
@@ -13,7 +13,7 @@ object SearchUtil {
         'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     )
 
-    fun search(based: String, input: String): Boolean {
+    fun isMatchByKeyword(based: String, input: String): Boolean {
         if (input.isEmpty()) return true
 
         val firstWord = input.first()
