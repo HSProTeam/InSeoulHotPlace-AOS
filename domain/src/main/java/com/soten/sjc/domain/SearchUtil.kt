@@ -14,11 +14,11 @@ object SearchUtil {
     )
 
     fun isMatchByKeyword(based: String, input: String): Boolean {
-        if (input.isEmpty()) return true
+        if (input.isBlank()) return true
 
-        val firstWord = input.first()
+        val firstWord = input.trim().first()
         if (isKorean(firstWord) || isConsonant(firstWord)) {
-            return matchKoreanAndConsonant(based, input)
+            return matchKoreanAndConsonant(based, input.trim())
         }
 
         return input.uppercase() in based.uppercase()
