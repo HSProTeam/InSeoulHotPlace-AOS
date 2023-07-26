@@ -1,6 +1,7 @@
 package com.soten.sjc.ui
 
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.soten.sjc.R
 import com.soten.sjc.base.BaseActivity
@@ -34,8 +35,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun bindViews() {
         super.bindViews()
         binding.searchEditText.addTextChangedListener {
+            binding.deleteKeywordImage.isVisible = it.toString().isNotBlank()
             mainViewModel.inputKeyword(it.toString())
             binding.areaRecyclerView.scrollToPosition(POSITION_FIRST)
+        }
+
+        binding.deleteKeywordImage.setOnClickListener {
+            binding.searchEditText.text.clear()
         }
     }
 
