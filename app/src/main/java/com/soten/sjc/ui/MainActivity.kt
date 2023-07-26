@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.bindViews()
         binding.searchEditText.addTextChangedListener {
             mainViewModel.inputKeyword(it.toString())
-            binding.recyclerView.scrollToPosition(0)
+            binding.recyclerView.scrollToPosition(POSITION_FIRST)
         }
     }
 
@@ -49,5 +49,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     areaAdapter.replaceAll(it.value)
                 }
         }
+    }
+
+    companion object {
+        private const val POSITION_FIRST = 0
     }
 }
