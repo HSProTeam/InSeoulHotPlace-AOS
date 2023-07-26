@@ -52,6 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             mainViewModel.filteredCongestionInfos
                 .distinctUntilChanged()
                 .collect {
+                    binding.emptyInfoText.isVisible = it.value.isEmpty()
                     areaAdapter.replaceAll(it.value)
                 }
         }
