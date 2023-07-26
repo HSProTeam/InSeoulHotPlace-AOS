@@ -2,7 +2,6 @@ package com.soten.sjc.ui
 
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.lifecycleScope
 import com.soten.sjc.R
 import com.soten.sjc.base.BaseActivity
 import com.soten.sjc.base.BaseAdapter
@@ -11,7 +10,6 @@ import com.soten.sjc.extensions.repeatOnStart
 import com.soten.sjc.util.KeyboardVisibilityUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -37,6 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.bindViews()
         binding.searchEditText.addTextChangedListener {
             mainViewModel.inputKeyword(it.toString())
+            binding.recyclerView.scrollToPosition(0)
         }
     }
 
