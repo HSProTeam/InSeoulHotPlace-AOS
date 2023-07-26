@@ -3,7 +3,8 @@ package com.soten.sjc.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.soten.sjc.domain.model.CongestionInfo
+import com.soten.sjc.domain.model.congestion.Category
+import com.soten.sjc.domain.model.congestion.CongestionInfo
 import com.soten.sjc.domain.repository.CongestRepository
 import com.soten.sjc.util.SearchUtil.search
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +31,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private val _categories = MutableStateFlow(emptyList<Category>())
+    val categories = _categories.asStateFlow()
+
     init {
         fetchCongestionInfos()
     }
@@ -37,8 +41,9 @@ class MainViewModel @Inject constructor(
     fun fetchCongestionInfos() {
         viewModelScope.launch {
             congestRepository.fetchCongests()
-                .onSuccess {
-                    _congestionInfos.value = it
+                .onSuccess { congestionInfos ->
+                    _categories.value = congestionInfos.getCategories()
+                    _congestionInfos.value = congestionInfos.value
                 }.onFailure {
                     Log.e("ASD", "asd", it)
                 }

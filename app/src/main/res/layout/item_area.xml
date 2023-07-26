@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.soten.sjc.domain.model.CongestionInfo" />
+            type="com.soten.sjc.domain.model.congestion.CongestionInfo" />
 
         <variable
             name="callback"
