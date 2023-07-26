@@ -43,10 +43,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.observeData()
 
         lifecycleScope.launch {
-            mainViewModel.searchCongestionInfos
+            mainViewModel.filteredCongestionInfos
                 .distinctUntilChanged()
                 .collect {
-                    areaAdapter.replaceAll(it)
+                    areaAdapter.replaceAll(it.value)
                 }
         }
     }
