@@ -26,7 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun initViews() {
         super.initViews()
-        binding.recyclerView.adapter = areaAdapter
+        binding.areaRecyclerView.adapter = areaAdapter
 
         keyboardVisibilityUtil.init()
     }
@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.bindViews()
         binding.searchEditText.addTextChangedListener {
             mainViewModel.inputKeyword(it.toString())
-            binding.recyclerView.scrollToPosition(POSITION_FIRST)
+            binding.areaRecyclerView.scrollToPosition(POSITION_FIRST)
         }
     }
 
