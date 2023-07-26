@@ -8,18 +8,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/searchEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:drawablePadding="6dp"
-            android:elevation="4dp"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            tools:ignore="LabelFor" />
+            android:layout_height="wrap_content"
+            android:elevation="4dp">
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="@color/white"
+
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:drawablePadding="6dp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="12dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/deleteKeywordImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingHorizontal="12dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_cancel_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/areaRecyclerView"
