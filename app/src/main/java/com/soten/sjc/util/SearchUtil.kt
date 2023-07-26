@@ -6,6 +6,8 @@ object SearchUtil {
     private const val koreanUnicodeEnd = 55203 // 힣
     private const val koreanUnicodeBased = 588 // 각 자음 마다 가지는 글자 수
 
+    private const val START_INDEX = 0
+
     private val koreanConsonant = arrayOf(
         'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ',
         'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
@@ -25,7 +27,7 @@ object SearchUtil {
     private fun matchKoreanAndConsonant(based: String, input: String): Boolean {
         if (based.length < input.length) return false
 
-        return (0..(based.length - input.length)).any { startIndex ->
+        return (START_INDEX..(based.length - input.length)).any { startIndex ->
             input.indices.all { offset ->
                 val baseChar = based[startIndex + offset]
                 val searchChar = input[offset]
