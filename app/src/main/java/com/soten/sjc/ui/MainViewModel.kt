@@ -4,13 +4,14 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soten.sjc.domain.model.congestion.Category
-import com.soten.sjc.domain.model.congestion.CongestionInfo
+import com.soten.sjc.domain.model.congestion.CongestionFilter
+import com.soten.sjc.domain.model.congestion.CongestionInfos
 import com.soten.sjc.domain.repository.CongestRepository
-import com.soten.sjc.util.SearchUtil.search
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,16 +20,14 @@ class MainViewModel @Inject constructor(
     private val congestRepository: CongestRepository
 ) : ViewModel() {
 
-    private val _congestionInfos = MutableStateFlow<List<CongestionInfo>>(emptyList())
-    val congestionInfos = _congestionInfos.asStateFlow()
+    private val _congestionInfos = MutableStateFlow(CongestionInfos.EMPTY)
+    private val congestionInfos = _congestionInfos.asStateFlow()
 
-    private val _keyword = MutableStateFlow("")
-    val keyword = _keyword.asStateFlow()
+    private val _congestionFilter = MutableStateFlow(CongestionFilter())
+    private val congestionFilter = _congestionFilter.asStateFlow()
 
-    val searchCongestionInfos = congestionInfos.combine(keyword) { infos, keyword ->
-        infos.filter {
-            search(it.areaName, keyword)
-        }
+    val filteredCongestionInfos = congestionInfos.combine(congestionFilter) { infos, filter ->
+        infos.search(filter)
     }
 
     private val _categories = MutableStateFlow(emptyList<Category>())
@@ -43,7 +42,7 @@ class MainViewModel @Inject constructor(
             congestRepository.fetchCongests()
                 .onSuccess { congestionInfos ->
                     _categories.value = congestionInfos.getCategories()
-                    _congestionInfos.value = congestionInfos.value
+                    _congestionInfos.value = congestionInfos
                 }.onFailure {
                     Log.e("ASD", "asd", it)
                 }
@@ -51,6 +50,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun inputKeyword(input: String) {
-        _keyword.value = input
+        _congestionFilter.update {
+            it.copy(input)
+        }
     }
 }
