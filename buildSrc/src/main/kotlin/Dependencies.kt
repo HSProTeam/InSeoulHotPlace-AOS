@@ -103,6 +103,11 @@ object Google {
         const val HILT_ANDROID = "com.google.dagger:hilt-android:$VERSION"
         const val HILT_COMPILER = "com.google.dagger:hilt-compiler:$VERSION"
     }
+
+    object Firebase {
+        const val VERSION = "21.0.0"
+        const val ADS = "com.google.android.gms:play-services-ads:$VERSION"
+    }
 }
 
 object SquareUp {
