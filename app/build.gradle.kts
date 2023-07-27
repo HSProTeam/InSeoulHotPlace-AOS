@@ -1,9 +1,17 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     id(Plugin.Android_Application)
     id(Plugin.JETBRAINS_KOTLIN_ANDROID)
     id(Plugin.KOTLINX_SERIALIZATION)
     id(Plugin.DAGGER_HILT)
     kotlin(Plugin.KAPT)
+}
+
+val properties = Properties().apply {
+    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
@@ -19,6 +27,7 @@ android {
         versionName = Project.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["admob_key"] = getLocalProperties("admob_key")
     }
 
     buildTypes {
@@ -27,6 +36,12 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
+            manifestPlaceholders["admob_key"] = getLocalProperties("admob_key")
+        }
+
+        getByName("debug") {
+            isMinifyEnabled = false
+            manifestPlaceholders["admob_key"] = getLocalProperties("admob_key")
         }
     }
     compileOptions {
@@ -68,4 +83,11 @@ dependencies {
     implementation(AndroidX.Lifecycle.VIEWMODEL_SAVEDSTATE)
 
     implementation(AndroidX.Activity.ACTIVITY_KTX)
+
+    implementation(Google.Firebase.ADS)
+}
+
+fun getLocalProperties(propertyKey: String): String {
+
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
