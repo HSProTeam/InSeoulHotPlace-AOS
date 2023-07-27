@@ -3,6 +3,8 @@ package com.soten.sjc.ui
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.soten.sjc.R
 import com.soten.sjc.base.BaseActivity
 import com.soten.sjc.base.BaseAdapter
@@ -27,6 +29,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun initViews() {
         super.initViews()
+
+
+        MobileAds.initialize(this)
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
         binding.areaRecyclerView.adapter = areaAdapter
 
         keyboardVisibilityUtil.init()
