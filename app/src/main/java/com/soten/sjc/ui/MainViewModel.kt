@@ -3,12 +3,15 @@ package com.soten.sjc.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.common.api.ApiException
 import com.soten.sjc.domain.model.congestion.Category
 import com.soten.sjc.domain.model.congestion.CongestionFilter
 import com.soten.sjc.domain.model.congestion.CongestionInfos
 import com.soten.sjc.domain.repository.CongestRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
@@ -33,6 +36,9 @@ class MainViewModel @Inject constructor(
     private val _categories = MutableStateFlow(emptyList<Category>())
     val categories = _categories.asStateFlow()
 
+    private val _error = MutableSharedFlow<Throwable>()
+    val error = _error.asSharedFlow()
+
     init {
         fetchCongestionInfos()
     }
@@ -44,7 +50,7 @@ class MainViewModel @Inject constructor(
                     _categories.value = congestionInfos.getCategories()
                     _congestionInfos.value = congestionInfos
                 }.onFailure {
-                    Log.e("ASD", "asd", it)
+                    _error.emit(it)
                 }
         }
     }
