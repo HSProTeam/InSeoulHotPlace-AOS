@@ -1,9 +1,7 @@
 package com.soten.sjc.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.common.api.ApiException
 import com.soten.sjc.domain.model.congestion.Category
 import com.soten.sjc.domain.model.congestion.CongestionFilter
 import com.soten.sjc.domain.model.congestion.CongestionInfos
