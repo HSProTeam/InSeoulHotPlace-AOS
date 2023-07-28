@@ -1,6 +1,4 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.io.FileInputStream
-import java.util.*
 
 plugins {
     id(Plugin.Android_Application)
@@ -8,10 +6,6 @@ plugins {
     id(Plugin.KOTLINX_SERIALIZATION)
     id(Plugin.DAGGER_HILT)
     kotlin(Plugin.KAPT)
-}
-
-val properties = Properties().apply {
-    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
@@ -88,6 +82,5 @@ dependencies {
 }
 
 fun getLocalProperties(propertyKey: String): String {
-
     return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
