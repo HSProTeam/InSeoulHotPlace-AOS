@@ -5,4 +5,5 @@ data class CongestionInfo(
     val areaCongestLevel: String,
     val areaCongestNumber: Int,
     val category: Category,
+    val isBookmark: Boolean = false
 )
