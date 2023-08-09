@@ -33,8 +33,13 @@ object AndroidX {
     }
 
     object Activity {
-        private const val VERSION = "1.6.0"
+        private const val VERSION = "1.6.1"
         const val ACTIVITY_KTX = "androidx.activity:activity-ktx:$VERSION"
+    }
+
+    object Fragment {
+        private const val VERSION = "1.6.0"
+        const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:$VERSION"
     }
 
     object Lifecycle {
