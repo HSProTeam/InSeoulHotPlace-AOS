@@ -88,9 +88,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun setSorter(isName: Boolean = false, isLevel: Boolean = false) {
+    fun setSorter(isName: Boolean = false, isCongestNumber: Boolean = false) {
         _congestionSorter.update { sorter ->
-            sorter.copy(isName, isLevel)
+            sorter.copy(isName, isCongestNumber)
         }
     }
 }
