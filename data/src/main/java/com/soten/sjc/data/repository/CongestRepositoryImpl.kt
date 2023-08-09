@@ -44,4 +44,12 @@ internal class CongestRepositoryImpl @Inject constructor(
             is ApiResult.Unexpected -> Result.failure(ApiException.Unexpected(apiResult.t?.message.orEmpty()))
         }
     }
+
+    override suspend fun insertBookmark(areaName: String) {
+        bookmarkDao.insertBookmark(BookmarkEntity(areaName))
+    }
+
+    override suspend fun deleteBookmark(areaName: String) {
+        bookmarkDao.deleteBookmark(BookmarkEntity(areaName))
+    }
 }
