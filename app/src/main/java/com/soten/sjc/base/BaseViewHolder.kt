@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.soten.sjc.BR
 
 open class BaseViewHolder(
-    private val binding: ViewDataBinding,
+    private val binding: ViewDataBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     open fun <T> bind(item: T, clickedCallback: ItemClicked?) {
@@ -29,8 +29,8 @@ open class BaseViewHolder(
                     LayoutInflater.from(parent.context),
                     layoutResId,
                     parent,
-                    false,
-                ),
+                    false
+                )
             )
     }
 }

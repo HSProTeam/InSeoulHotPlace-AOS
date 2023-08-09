@@ -10,7 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 open class BaseFragment<DB : ViewDataBinding>(
-    @LayoutRes private val layoutRes: Int,
+    @LayoutRes private val layoutRes: Int
 ) : Fragment() {
 
     private var _binding: DB? = null
@@ -19,7 +19,7 @@ open class BaseFragment<DB : ViewDataBinding>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
 

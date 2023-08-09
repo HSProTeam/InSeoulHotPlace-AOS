@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 open class BaseAdapter(
     @LayoutRes private val layoutResId: Int,
-    private val clickedCallback: ItemClicked? = null,
+    private val clickedCallback: ItemClicked? = null
 ) : RecyclerView.Adapter<BaseViewHolder>() {
 
     protected val items = mutableListOf<Any>()

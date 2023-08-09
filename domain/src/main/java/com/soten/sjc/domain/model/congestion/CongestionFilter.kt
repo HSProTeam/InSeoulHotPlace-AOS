@@ -4,7 +4,7 @@ import com.soten.sjc.domain.SearchUtil.isMatchByKeyword
 
 data class CongestionFilter(
     val keyword: String = "",
-    val category: Category? = null,
+    val category: Category? = null
 ) {
 
     fun isMatch(

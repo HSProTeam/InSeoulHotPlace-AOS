@@ -7,7 +7,7 @@ import android.view.Window
 class KeyboardVisibilityUtil(
     private val window: Window,
     private val onShowKeyboard: (() -> Unit)? = null,
-    private val onHideKeyboard: (() -> Unit)? = null,
+    private val onHideKeyboard: (() -> Unit)? = null
 ) {
 
     private val minKeyBoardHeightPx = 150

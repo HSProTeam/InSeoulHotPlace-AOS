@@ -12,6 +12,6 @@ internal interface OpenApi {
         @Query("sort") sort: Boolean = true,
         @Query("page") page: Int = 1,
         @Query("category") category: String = "전체보기",
-        @Query("count") count: Int = 500,
+        @Query("count") count: Int = 500
     ): ApiResult<CongestDtos>
 }

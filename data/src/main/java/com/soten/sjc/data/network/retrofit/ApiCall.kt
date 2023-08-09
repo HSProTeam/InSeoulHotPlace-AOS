@@ -9,7 +9,7 @@ import retrofit2.Response
 import java.io.IOException
 
 internal class ApiCall<T : ApiResult<*>>(
-    private val call: Call<T>,
+    private val call: Call<T>
 ) : Call<T> {
 
     override fun clone(): Call<T> = ApiCall(call.clone())
@@ -35,7 +35,7 @@ internal class ApiCall<T : ApiResult<*>>(
                     val newResponse: Response<T> = Response.success(response.body())
                     callback.onResponse(
                         this@ApiCall,
-                        newResponse,
+                        newResponse
                     )
                     return
                 }

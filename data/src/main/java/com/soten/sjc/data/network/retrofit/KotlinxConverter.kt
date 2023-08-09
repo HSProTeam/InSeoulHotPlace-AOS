@@ -8,7 +8,7 @@ import retrofit2.Converter
 
 internal class KotlinxConverter<T>(
     private val deserializer: KSerializer<T>,
-    private val json: Json,
+    private val json: Json
 ) : Converter<ResponseBody, ApiResult<T>> {
 
     override fun convert(value: ResponseBody): ApiResult<T> {

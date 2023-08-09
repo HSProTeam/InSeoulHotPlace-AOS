@@ -22,7 +22,7 @@ internal object RetrofitFactory {
         if (BuildConfig.DEBUG) {
             okHttpClientBuilder.addInterceptor(
                 HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY),
+                    .setLevel(HttpLoggingInterceptor.Level.BODY)
             )
         }
 

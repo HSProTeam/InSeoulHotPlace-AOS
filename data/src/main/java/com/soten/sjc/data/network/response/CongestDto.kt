@@ -15,5 +15,5 @@ internal data class CongestDto(
     val areaCongestNumber: Int,
     val category: String,
     val x: String,
-    val y: String,
+    val y: String
 )

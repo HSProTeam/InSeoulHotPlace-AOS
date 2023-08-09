@@ -23,7 +23,7 @@ internal class KotlinxConverterFactory : Converter.Factory() {
     override fun responseBodyConverter(
         type: Type,
         annotations: Array<Annotation>,
-        retrofit: Retrofit,
+        retrofit: Retrofit
     ): Converter<ResponseBody, *> {
         val deserializer = kotlinXJson.serializersModule.serializer(type)
         return KotlinxConverter(deserializer, kotlinXJson)
@@ -33,20 +33,20 @@ internal class KotlinxConverterFactory : Converter.Factory() {
         type: Type,
         parameterAnnotations: Array<Annotation>,
         methodAnnotations: Array<Annotation>,
-        retrofit: Retrofit,
+        retrofit: Retrofit
     ): Converter<*, RequestBody>? {
         return originalMoshiConverterFactory.requestBodyConverter(
             type,
             parameterAnnotations,
             methodAnnotations,
-            retrofit,
+            retrofit
         )
     }
 
     override fun stringConverter(
         type: Type,
         annotations: Array<out Annotation>,
-        retrofit: Retrofit,
+        retrofit: Retrofit
     ): Converter<*, String>? {
         return originalMoshiConverterFactory.stringConverter(type, annotations, retrofit)
     }

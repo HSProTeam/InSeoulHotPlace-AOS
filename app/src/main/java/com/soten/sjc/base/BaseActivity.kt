@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 open class BaseActivity<DB : ViewDataBinding>(
-    @LayoutRes private val layoutRes: Int,
+    @LayoutRes private val layoutRes: Int
 ) : AppCompatActivity() {
 
     protected lateinit var binding: DB

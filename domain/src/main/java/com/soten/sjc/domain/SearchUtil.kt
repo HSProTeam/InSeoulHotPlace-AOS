@@ -46,5 +46,4 @@ object SearchUtil {
 
     private fun getConsonant(ch: Char): Char =
         koreanConsonant[(ch.code - koreanUnicodeStart) / koreanUnicodeBased]
-
 }
