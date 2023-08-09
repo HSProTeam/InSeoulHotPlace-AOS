@@ -67,6 +67,10 @@ dependencies {
 
     implementation(Google.Hilt.HILT_ANDROID)
     kapt(Google.Hilt.HILT_COMPILER)
+
+    implementation(AndroidX.Room.KTX)
+    implementation(AndroidX.Room.RUNTIME)
+    kapt(AndroidX.Room.COMPILER)
 }
 
 fun getLocalProperties(propertyKey: String): String {
