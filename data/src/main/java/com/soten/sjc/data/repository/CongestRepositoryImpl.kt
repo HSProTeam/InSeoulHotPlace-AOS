@@ -8,18 +8,30 @@ import com.soten.sjc.domain.model.congestion.CongestionInfos
 import com.soten.sjc.domain.repository.CongestRepository
 import javax.inject.Inject
 
-
 internal class CongestRepositoryImpl @Inject constructor(
-    private val openApi: OpenApi
+    private val openApi: OpenApi,
+    private val bookmarkDao: BookmarkDao
 ) : CongestRepository {
 
     override suspend fun fetchCongests(): Result<CongestionInfos> {
         return when (val apiResult = openApi.fetchRealTimeCongest()) {
-            is ApiResult.Success ->
+            is ApiResult.Success -> {
+                val bookmarks = bookmarkDao.fetchAllBookmark().map { bookmark ->
+                    bookmark.areaName
+                }
+
                 Result.success(
-                    CongestionInfos(apiResult.value?.congests?.map {
-                        it.toDomain()
-                    } ?: emptyList()))
+                    CongestionInfos(
+                        apiResult.value?.congests?.map { congestDto ->
+                            if (bookmarks.contains(congestDto.areaName)) {
+                                congestDto.toDomain(true)
+                            } else {
+                                congestDto.toDomain()
+                            }
+                        } ?: emptyList()
+                    )
+                )
+            }
 
             is ApiResult.Failure -> Result.failure(
                 ApiException.Failure(
