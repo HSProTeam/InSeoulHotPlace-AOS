@@ -77,6 +77,7 @@ dependencies {
     implementation(AndroidX.Lifecycle.VIEWMODEL_SAVEDSTATE)
 
     implementation(AndroidX.Activity.ACTIVITY_KTX)
+    implementation(AndroidX.Fragment.FRAGMENT_KTX)
 
     implementation(Google.Firebase.ADS)
 }
