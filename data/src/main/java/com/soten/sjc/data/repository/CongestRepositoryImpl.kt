@@ -1,5 +1,7 @@
 package com.soten.sjc.data.repository
 
+import com.soten.sjc.data.db.dao.BookmarkDao
+import com.soten.sjc.data.db.entity.area.BookmarkEntity
 import com.soten.sjc.data.mapper.toDomain
 import com.soten.sjc.data.network.ApiResult
 import com.soten.sjc.data.network.api.OpenApi
