@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soten.sjc.domain.model.congestion.Category
 import com.soten.sjc.domain.model.congestion.CongestionFilter
+import com.soten.sjc.domain.model.congestion.CongestionInfo
 import com.soten.sjc.domain.model.congestion.CongestionInfos
+import com.soten.sjc.domain.model.congestion.CongestionsSorter
 import com.soten.sjc.domain.repository.CongestRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -57,8 +59,38 @@ class MainViewModel @Inject constructor(
     }
 
     fun inputKeyword(input: String) {
-        _congestionFilter.update {
-            it.copy(input)
+        _congestionFilter.update { filter ->
+            filter.copy(input)
+        }
+    }
+
+    fun toggleBookmark(congestionInfo: CongestionInfo) {
+        viewModelScope.launch {
+            if (congestionInfo.isBookmark) {
+                congestRepository.deleteBookmark(congestionInfo.areaName)
+            } else {
+                congestRepository.insertBookmark(congestionInfo.areaName)
+            }
+        }
+
+        congestionInfos.update {
+            it.toggleBookmark(congestionInfo.areaName)
+        }
+    }
+
+    fun initSorter() {
+        _congestionSorter.value = CongestionsSorter()
+    }
+
+    fun setSorter() {
+        _congestionSorter.update { sorter ->
+            sorter.copy(isAscend = sorter.isAscend.not())
+        }
+    }
+
+    fun setSorter(isName: Boolean = false, isLevel: Boolean = false) {
+        _congestionSorter.update { sorter ->
+            sorter.copy(isName, isLevel)
         }
     }
 }
