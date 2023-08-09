@@ -16,6 +16,8 @@ open class BaseBottomSheetFragment<DB : ViewDataBinding>(@LayoutRes val layoutRe
     private var _binding: DB? = null
     protected val binding get() = _binding!!
 
+    private lateinit var behavior: BottomSheetBehavior<View>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,13 +30,11 @@ open class BaseBottomSheetFragment<DB : ViewDataBinding>(@LayoutRes val layoutRe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bottomSheet =
-            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-        val behavior = BottomSheetBehavior.from<View>(bottomSheet ?: return)
 
-        view.post {
-            behavior.peekHeight = view.measuredHeight
-        }
+        behavior =
+            BottomSheetBehavior.from(
+                dialog?.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return
+            )
 
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -49,6 +49,12 @@ open class BaseBottomSheetFragment<DB : ViewDataBinding>(@LayoutRes val layoutRe
         initViews()
         bindViews()
         observeData()
+    }
+
+    protected fun extend() {
+        requireView().post {
+            behavior.peekHeight = requireView().measuredHeight
+        }
     }
 
     open fun initViews() = Unit
