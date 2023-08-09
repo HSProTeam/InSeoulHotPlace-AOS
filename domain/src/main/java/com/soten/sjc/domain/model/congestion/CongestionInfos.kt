@@ -32,7 +32,7 @@ value class CongestionInfos(val value: List<CongestionInfo>) {
 
     private fun sorting(list: List<CongestionInfo>, sorter: CongestionsSorter): List<CongestionInfo> {
         val isAreaName = sorter.isAreaName
-        val isLevel = sorter.isLevel
+        val isCongestNumber = sorter.isCongestNumber
         val isAscend = sorter.isAscend
         return when {
             isAreaName && isAscend -> list.sortedWith(
@@ -45,14 +45,14 @@ value class CongestionInfos(val value: List<CongestionInfo>) {
                     .thenByDescending { it.areaName }
             )
 
-            isLevel && isAscend -> list.sortedWith(
+            isCongestNumber && isAscend -> list.sortedWith(
                 compareByDescending<CongestionInfo> { it.isBookmark }
-                    .thenBy { it.areaCongestLevel }
+                    .thenBy { it.areaCongestNumber }
             )
 
-            isLevel && isAscend.not() -> list.sortedWith(
+            isCongestNumber && isAscend.not() -> list.sortedWith(
                 compareByDescending<CongestionInfo> { it.isBookmark }
-                    .thenByDescending { it.areaCongestLevel }
+                    .thenByDescending { it.areaCongestNumber }
             )
 
             else -> list.sortedWith(
