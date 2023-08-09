@@ -21,28 +21,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val areaAdapter = BaseAdapter(R.layout.item_area)
 
-    private val keyboardVisibilityUtil by lazy {
-        KeyboardVisibilityUtil(window) {
-            binding.searchEditText.clearFocus()
-        }
-    }
-
     override fun initViews() {
         super.initViews()
 
+        initAdMob()
 
-        MobileAds.initialize(this)
+        initAdapter()
 
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-
-        binding.areaRecyclerView.adapter = areaAdapter
-
-        keyboardVisibilityUtil.init()
+        initKeyboardUtil()
     }
 
     override fun bindViews() {
         super.bindViews()
+
         binding.searchEditText.addTextChangedListener {
             binding.deleteKeywordImage.isVisible = it.toString().isNotBlank()
             mainViewModel.inputKeyword(it.toString())
@@ -65,6 +56,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     areaAdapter.replaceAll(it.value)
                 }
         }
+    }
+
+    private fun initAdMob() {
+        MobileAds.initialize(this)
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+    }
+
+    private fun initAdapter() {
+        binding.areaRecyclerView.adapter = areaAdapter
+    }
+
+    private fun initKeyboardUtil() {
+        val keyboardVisibilityUtil = KeyboardVisibilityUtil(window) {
+                binding.searchEditText.clearFocus()
+            }
+
+        keyboardVisibilityUtil.init()
     }
 
     companion object {
