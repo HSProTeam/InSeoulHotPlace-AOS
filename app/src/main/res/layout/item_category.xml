@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.soten.sjc.domain.model.congestion.Category" />
+
+        <variable
+            name="callback"
+            type="com.soten.sjc.ui.CategoryClicked" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> callback.onClickCategory(item)}"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="@{item.value}"
+            tools:text="카테고리" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/baseline_check_24"
+            android:visibility="@{item.checked ? View.VISIBLE : View.INVISIBLE}"
+            tools:background="@drawable/baseline_check_24" />
+    </LinearLayout>
+</layout>
