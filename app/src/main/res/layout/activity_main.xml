@@ -87,6 +87,12 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/ic_sort_asc" />
+
+                <TextView
+                    android:id="@+id/countText"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </HorizontalScrollView>
 
