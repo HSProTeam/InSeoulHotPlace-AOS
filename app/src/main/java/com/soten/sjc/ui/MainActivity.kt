@@ -11,6 +11,7 @@ import com.soten.sjc.R
 import com.soten.sjc.base.BaseActivity
 import com.soten.sjc.base.BaseAdapter
 import com.soten.sjc.databinding.ActivityMainBinding
+import com.soten.sjc.domain.model.congestion.CongestionFilter
 import com.soten.sjc.domain.model.congestion.CongestionInfo
 import com.soten.sjc.extensions.repeatOnStart
 import com.soten.sjc.extensions.setBackgroundTint
@@ -55,6 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
 
         binding.initChip.setOnClickListener {
             mainViewModel.initSorter()
+            mainViewModel.initFilter()
         }
 
         binding.nameChip.setOnClickListener {
@@ -62,7 +64,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
         }
 
         binding.congestChip.setOnClickListener {
-            mainViewModel.setSorter(isLevel = true)
+            mainViewModel.setSorter(isCongestNumber = true)
+        }
+
+        binding.categoryChip.setOnClickListener {
+            CategorySelectBottomSheetFragment().show(supportFragmentManager, null)
         }
 
         binding.sortingImage.setOnClickListener {
@@ -79,33 +85,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
                 .collect {
                     binding.emptyInfoText.isVisible = it.value.isEmpty()
                     areaAdapter.replaceAll(it.value)
+
+                    binding.countText.text = it.value.size.toString()
                 }
         }
 
         repeatOnStart {
             mainViewModel.congestionSorter.collect { sorter ->
                 setCheckingChip(binding.nameChip, sorter.isAreaName)
-                setCheckingChip(binding.congestChip, sorter.isLevel)
+                setCheckingChip(binding.congestChip, sorter.isCongestNumber)
 
-                val sortingBackgroundResource = if (sorter.isAscend) {
-                    R.drawable.ic_sort_asc
-                } else {
-                    R.drawable.ic_sort_desc
-                }
+                val sortingBackgroundResource = getSortingImageResource(sorter.isAscend)
+
                 binding.sortingImage.setBackgroundResource(sortingBackgroundResource)
             }
         }
 
         repeatOnStart {
             mainViewModel.congestionFilter.collect { filter ->
-                if (filter.category != null) {
-                    binding.categoryChip.text = filter.category?.value
+                if (filter.categories.isNotEmpty()) {
+                    val isMany = filter.categories.size > 1
+
+                    binding.categoryChip.text = getCategoryText(isMany, filter)
                     setCheckingChip(binding.categoryChip, true)
+                    return@collect
                 }
 
                 binding.categoryChip.text = "카테고리"
                 setCheckingChip(binding.categoryChip, false)
-                return@collect
             }
         }
     }
@@ -140,6 +147,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
         val textColor = if (isSorting) Color.WHITE else Color.BLACK
         chip.setTextColor(textColor)
     }
+
+    private fun getCategoryText(
+        isMany: Boolean,
+        filter: CongestionFilter
+    ) = if (isMany) "카테고리 ${filter.categories.size}"
+    else filter.categories.firstOrNull()?.value
+
+    private fun getSortingImageResource(isAscend: Boolean): Int = if (isAscend)
+        R.drawable.ic_sort_asc
+    else R.drawable.ic_sort_desc
 
     companion object {
         private const val POSITION_FIRST = 0
