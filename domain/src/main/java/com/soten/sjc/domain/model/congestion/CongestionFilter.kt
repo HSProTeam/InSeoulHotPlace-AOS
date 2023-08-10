@@ -4,25 +4,25 @@ import com.soten.sjc.domain.SearchUtil.isMatchByKeyword
 
 data class CongestionFilter(
     val keyword: String = "",
-    val category: Category? = null
+    val categories: List<Category> = emptyList()
 ) {
 
     fun isMatch(
         targetKeyword: String,
-        targetCategory: Category?
+        targetCategories: Category
     ): Boolean {
-        return isMatchKeyword(targetKeyword) && isMatchCategory(targetCategory)
+        return isMatchKeyword(targetKeyword) && isMatchCategories(targetCategories)
     }
 
     private fun isMatchKeyword(target: String): Boolean {
         return isMatchByKeyword(target, keyword)
     }
 
-    private fun isMatchCategory(target: Category?): Boolean {
-        if (category == null) {
+    private fun isMatchCategories(target: Category): Boolean {
+        if (categories.isEmpty()) {
             return true
         }
 
-        return target == category
+        return target.value in categories.map { it.value }
     }
 }
