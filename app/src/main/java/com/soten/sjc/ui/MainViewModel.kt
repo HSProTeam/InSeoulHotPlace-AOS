@@ -42,15 +42,11 @@ class MainViewModel @Inject constructor(
             infos.search(filter, sorter)
         }
 
-    init {
-        fetchCongestionInfos()
-    }
-
     fun fetchCongestionInfos() {
         viewModelScope.launch {
             congestRepository.fetchCongests()
                 .onSuccess { congests ->
-                    _categories.value = congests.getCategories()
+                    _categories.value = listOf(Category.ALL) + congests.getCategories()
                     congestionInfos.value = congests
                 }.onFailure {
                     _error.emit(it)
@@ -82,6 +78,10 @@ class MainViewModel @Inject constructor(
         _congestionSorter.value = CongestionsSorter()
     }
 
+    fun initFilter() {
+        _congestionFilter.value = CongestionFilter()
+    }
+
     fun setSorter() {
         _congestionSorter.update { sorter ->
             sorter.copy(isAscend = sorter.isAscend.not())
@@ -91,6 +91,12 @@ class MainViewModel @Inject constructor(
     fun setSorter(isName: Boolean = false, isCongestNumber: Boolean = false) {
         _congestionSorter.update { sorter ->
             sorter.copy(isName, isCongestNumber)
+        }
+    }
+
+    fun setCategoriesFilter(selectedCategories: List<Category>) {
+        _congestionFilter.update { filter ->
+            filter.copy(categories = selectedCategories.toList())
         }
     }
 }
