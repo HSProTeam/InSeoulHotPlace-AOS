@@ -4,9 +4,8 @@ package com.soten.sjc.domain.model.congestion
 value class CongestionInfos(val value: List<CongestionInfo>) {
 
     fun search(filter: CongestionFilter, sorter: CongestionsSorter): CongestionInfos {
-        return CongestionInfos(sorting(value.filter { congestionInfo ->
-            filter.isMatch(congestionInfo.areaName, congestionInfo.category)
-        }, sorter))
+        val filteredCongestions = filtering(filter)
+        return CongestionInfos(sorting(filteredCongestions, sorter))
     }
 
     fun toggleBookmark(areaName: String): CongestionInfos {
@@ -22,6 +21,11 @@ value class CongestionInfos(val value: List<CongestionInfo>) {
     fun getCategories(): List<Category> {
         return value.groupBy { it.category }.keys.toList()
     }
+
+    private fun filtering(filter: CongestionFilter) =
+        value.filter { congestionInfo ->
+            filter.isMatch(congestionInfo.areaName, congestionInfo.category)
+        }
 
     private fun sorting(
         congestions: List<CongestionInfo>, sorter: CongestionsSorter
