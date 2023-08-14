@@ -2,6 +2,7 @@ package com.soten.sjc.ui
 
 import android.graphics.Color
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -111,8 +112,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
                     return@collect
                 }
 
-                binding.categoryChip.text = "카테고리"
+                binding.categoryChip.text = TEXT_CATEGORY
                 setCheckingChip(binding.categoryChip, false)
+            }
+        }
+
+        repeatOnStart {
+            mainViewModel.error.collect {
+                Toast.makeText(baseContext, TEXT_ERROR, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -151,7 +158,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
     private fun getCategoryText(
         isMany: Boolean,
         filter: CongestionFilter
-    ) = if (isMany) "카테고리 ${filter.categories.size}"
+    ) = if (isMany) "$TEXT_CATEGORY ${filter.categories.size}"
     else filter.categories.firstOrNull()?.value
 
     private fun getSortingImageResource(isAscend: Boolean): Int = if (isAscend)
@@ -160,5 +167,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
 
     companion object {
         private const val POSITION_FIRST = 0
+
+        private const val TEXT_CATEGORY = "카테고리"
+        private const val TEXT_ERROR = "오류가 발생했습니다. 잠시 후 새로고침 버튼을 눌러주세요."
     }
 }
