@@ -30,12 +30,10 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
-            manifestPlaceholders["admob_key"] = getLocalProperties("admob_key")
         }
 
         getByName("debug") {
             isMinifyEnabled = false
-            manifestPlaceholders["admob_key"] = getLocalProperties("admob_key")
         }
     }
     compileOptions {
