@@ -6,7 +6,7 @@ value class CongestionInfos(val value: List<CongestionInfo>) {
     fun search(filter: CongestionFilter, sorter: CongestionsSorter): CongestionInfos {
         return CongestionInfos(sorting(value.filter { congestionInfo ->
             filter.isMatch(congestionInfo.areaName, congestionInfo.category)
-        }.sortedBy { it.isBookmark }, sorter))
+        }, sorter))
     }
 
     fun toggleBookmark(areaName: String): CongestionInfos {
