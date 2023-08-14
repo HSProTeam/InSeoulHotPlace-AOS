@@ -15,6 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:paddingVertical="4dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -40,7 +41,7 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_height="18dp"
             android:layout_marginStart="16dp"
             app:congest="@{item}"
             app:layout_constraintDimensionRatio="131:75"
