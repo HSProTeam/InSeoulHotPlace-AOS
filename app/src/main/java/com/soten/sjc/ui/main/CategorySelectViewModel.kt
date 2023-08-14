@@ -1,4 +1,4 @@
-package com.soten.sjc.ui
+package com.soten.sjc.ui.main
 
 import androidx.lifecycle.ViewModel
 import com.soten.sjc.domain.model.congestion.Category

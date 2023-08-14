@@ -1,4 +1,4 @@
-package com.soten.sjc.ui
+package com.soten.sjc.ui.main
 
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels

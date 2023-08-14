@@ -1,4 +1,4 @@
-package com.soten.sjc.ui
+package com.soten.sjc.ui.main
 
 import android.graphics.Color
 import android.widget.TextView

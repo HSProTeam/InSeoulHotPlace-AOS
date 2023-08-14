@@ -10,7 +10,7 @@
 
         <variable
             name="callback"
-            type="com.soten.sjc.ui.AreaClicked" />
+            type="com.soten.sjc.ui.main.AreaClicked" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

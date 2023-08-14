@@ -10,7 +10,7 @@
 
         <variable
             name="callback"
-            type="com.soten.sjc.ui.CategoryClicked" />
+            type="com.soten.sjc.ui.main.CategoryClicked" />
 
         <import type="android.view.View" />
     </data>
