@@ -45,5 +45,5 @@ object SearchUtil {
     private fun isKorean(ch: Char): Boolean = ch.code in KOREAN_UNICODE_START..KOREAN_UNICODE_END
 
     private fun getConsonant(ch: Char): Char =
-        koreanConsonant[(ch.code - START_INDEX) / KOREAN_UNICODE_BASED]
+        koreanConsonant[(ch.code - KOREAN_UNICODE_START) / KOREAN_UNICODE_BASED]
 }
