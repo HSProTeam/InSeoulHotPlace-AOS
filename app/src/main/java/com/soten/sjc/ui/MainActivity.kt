@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.soten.sjc.R
@@ -137,6 +138,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
 
     private fun initAdapter() {
         binding.areaRecyclerView.adapter = areaAdapter
+
+        val dividerItemDecoration =
+            ItemDecoration(R.color.lightGray, baseContext, LinearLayoutManager.VERTICAL)
+
+        binding.areaRecyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     private fun initKeyboardUtil() {
