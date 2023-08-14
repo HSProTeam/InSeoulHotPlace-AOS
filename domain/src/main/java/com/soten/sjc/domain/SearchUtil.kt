@@ -2,9 +2,9 @@ package com.soten.sjc.domain
 
 object SearchUtil {
 
-    private const val koreanUnicodeStart = 44032 // 가
-    private const val koreanUnicodeEnd = 55203 // 힣
-    private const val koreanUnicodeBased = 588 // 각 자음 마다 가지는 글자 수
+    private const val KOREAN_UNICODE_START = 44032 // 가
+    private const val KOREAN_UNICODE_END = 55203 // 힣
+    private const val KOREAN_UNICODE_BASED = 588 // 각 자음 마다 가지는 글자 수
 
     private const val START_INDEX = 0
 
@@ -42,8 +42,8 @@ object SearchUtil {
 
     private fun isConsonant(ch: Char): Boolean = ch in koreanConsonant
 
-    private fun isKorean(ch: Char): Boolean = ch.code in koreanUnicodeStart..koreanUnicodeEnd
+    private fun isKorean(ch: Char): Boolean = ch.code in KOREAN_UNICODE_START..KOREAN_UNICODE_END
 
     private fun getConsonant(ch: Char): Char =
-        koreanConsonant[(ch.code - koreanUnicodeStart) / koreanUnicodeBased]
+        koreanConsonant[(ch.code - START_INDEX) / KOREAN_UNICODE_BASED]
 }
