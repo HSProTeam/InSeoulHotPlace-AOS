@@ -50,10 +50,4 @@ internal class KotlinxConverterFactory : Converter.Factory() {
     ): Converter<*, String>? {
         return originalMoshiConverterFactory.stringConverter(type, annotations, retrofit)
     }
-
-    companion object {
-        fun create(): KotlinxConverterFactory {
-            return KotlinxConverterFactory()
-        }
-    }
 }
