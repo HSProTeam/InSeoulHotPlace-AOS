@@ -12,7 +12,7 @@ internal object RetrofitFactory {
             .baseUrl(url)
             .client(createOkhttpClient())
             .addCallAdapterFactory(ApiResultCallAdapterFactory())
-            .addConverterFactory(KotlinxConverterFactory.create())
+            .addConverterFactory(KotlinxConverterFactory())
             .build()
     }
 
