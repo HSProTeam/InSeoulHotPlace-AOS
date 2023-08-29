@@ -12,7 +12,7 @@ import java.lang.reflect.Type
 
 internal class KotlinxConverterFactory : Converter.Factory() {
 
-    private val originalMoshiConverterFactory =
+    private val originalKotlinXConverterFactory =
         Json.asConverterFactory("application/json".toMediaType())
 
     private val kotlinXJson: Json = Json {
@@ -35,7 +35,7 @@ internal class KotlinxConverterFactory : Converter.Factory() {
         methodAnnotations: Array<Annotation>,
         retrofit: Retrofit
     ): Converter<*, RequestBody>? {
-        return originalMoshiConverterFactory.requestBodyConverter(
+        return originalKotlinXConverterFactory.requestBodyConverter(
             type,
             parameterAnnotations,
             methodAnnotations,
@@ -48,6 +48,6 @@ internal class KotlinxConverterFactory : Converter.Factory() {
         annotations: Array<out Annotation>,
         retrofit: Retrofit
     ): Converter<*, String>? {
-        return originalMoshiConverterFactory.stringConverter(type, annotations, retrofit)
+        return originalKotlinXConverterFactory.stringConverter(type, annotations, retrofit)
     }
 }
