@@ -15,7 +15,7 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesUpbitApi(): OpenApi {
+    fun providesOpenApi(): OpenApi {
         return RetrofitFactory.create(BuildConfig.API_URL)
             .create(OpenApi::class.java)
     }
