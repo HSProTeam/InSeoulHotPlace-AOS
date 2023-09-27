@@ -100,7 +100,7 @@ object Junit {
 
 object Google {
     const val METERIAL = "com.google.android.material:material:1.9.0"
-    const val TRUTH = "com.google.truth:truth:1.1.3"
+    const val TRUTH = "com.google.truth:truth:1.1.5"
 
     object Hilt {
         const val VERSION = "2.44"
