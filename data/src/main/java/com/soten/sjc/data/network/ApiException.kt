@@ -1,4 +1,4 @@
-package com.soten.sjc.domain.exception
+package com.soten.sjc.data.network
 
 sealed class ApiException : Throwable() {
 
