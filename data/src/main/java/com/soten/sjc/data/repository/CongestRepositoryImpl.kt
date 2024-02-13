@@ -3,9 +3,8 @@ package com.soten.sjc.data.repository
 import com.soten.sjc.data.db.dao.BookmarkDao
 import com.soten.sjc.data.db.entity.area.BookmarkEntity
 import com.soten.sjc.data.mapper.toDomain
-import com.soten.sjc.data.network.ApiResult
 import com.soten.sjc.data.network.api.OpenApi
-import com.soten.sjc.domain.exception.ApiException
+import com.soten.sjc.data.network.transformApiResult
 import com.soten.sjc.domain.model.congestion.CongestionInfos
 import com.soten.sjc.domain.repository.CongestRepository
 import javax.inject.Inject
@@ -16,34 +15,22 @@ internal class CongestRepositoryImpl @Inject constructor(
 ) : CongestRepository {
 
     override suspend fun fetchCongests(): Result<CongestionInfos> {
-        return when (val apiResult = openApi.fetchRealTimeCongest()) {
-            is ApiResult.Success -> {
-                val bookmarks = bookmarkDao.fetchAllBookmark().map { bookmark ->
-                    bookmark.areaName
-                }
+        return transformApiResult(openApi.fetchRealTimeCongest()) { congestDtos ->
+            congestDtos?.congests ?: return@transformApiResult CongestionInfos.EMPTY
 
-                Result.success(
-                    CongestionInfos(
-                        apiResult.value?.congests?.map { congestDto ->
-                            if (bookmarks.contains(congestDto.areaName)) {
-                                congestDto.toDomain(true)
-                            } else {
-                                congestDto.toDomain()
-                            }
-                        } ?: emptyList()
-                    )
-                )
+            val bookmarks = bookmarkDao.fetchAllBookmark().map { bookmark ->
+                bookmark.areaName
             }
 
-            is ApiResult.Failure -> Result.failure(
-                ApiException.Failure(
-                    apiResult.message.orEmpty(),
-                    apiResult.code ?: 0
-                )
+            CongestionInfos(
+                congestDtos.congests.map { congestDto ->
+                    if (bookmarks.contains(congestDto.areaName)) {
+                        congestDto.toDomain(true)
+                    } else {
+                        congestDto.toDomain()
+                    }
+                }
             )
-
-            is ApiResult.NetworkError -> Result.failure(ApiException.NetworkError(apiResult.exception.message.orEmpty()))
-            is ApiResult.Unexpected -> Result.failure(ApiException.Unexpected(apiResult.t?.message.orEmpty()))
         }
     }
 
